@@ -10,14 +10,16 @@
 
 void UMenuWidget::Show()
 {
-	if (GetParent())
-		return;
-
 	AddToViewport();
 	
-	if (auto* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0))
+	if (auto* PlayerController = GetPlayerController())
 	{
 		PlayerController->SetShowMouseCursor(FSlateApplication::Get().IsMouseAttached());
 		UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx(PlayerController);
 	}
+}
+
+APlayerController* UMenuWidget::GetPlayerController()
+{
+	return UGameplayStatics::GetPlayerController(GetWorld(), 0);
 }

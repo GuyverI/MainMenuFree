@@ -16,5 +16,8 @@ class MAINMENUFREE_API UMenuWidget : public UUserWidget
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void Show();
+	virtual void Show();
+
+protected:
+	APlayerController* GetPlayerController();
 };
