@@ -6,6 +6,21 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "GameFramework/PlayerController.h"
 
+#include "TextButtonWidget.h"
+
+bool UInGameMenuWidget::Initialize()
+{
+	if (!Super::Initialize())
+		return false;
+
+	if (!IsValid(ResumeBtn))
+		return false;
+
+	ResumeBtn->OnClicked.AddUniqueDynamic(this, &UInGameMenuWidget::Hide);
+
+	return true;
+}
+
 void UInGameMenuWidget::Show()
 {
 	if (auto* PlayerController = GetPlayerController())
