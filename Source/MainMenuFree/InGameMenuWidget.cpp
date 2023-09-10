@@ -6,7 +6,7 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "GameFramework/PlayerController.h"
 
-#include "TextButtonWidget.h"
+#include "Buttons/TextButtonWidget.h"
 
 bool UInGameMenuWidget::Initialize()
 {
