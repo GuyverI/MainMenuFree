@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "MainMenu_Free",
+	"Description": "Simple Menu System",
+	"Category": "Other",
+	"CreatedBy": "Skull",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "MainMenu_Free",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
