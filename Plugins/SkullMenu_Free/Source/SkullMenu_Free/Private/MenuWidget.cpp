@@ -8,18 +8,21 @@
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
 
-void USkullMenu_MenuWidget::Show()
+
+void USkullMenu_MenuWidget::AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder)
 {
-	AddToViewport();
-	
-	if (auto* PlayerController = GetPlayerController())
+	Super::AddToScreen(LocalPlayer, ZOrder);
+
+	if (auto* PlayerController = GetPlayerController(LocalPlayer))
 	{
 		PlayerController->SetShowMouseCursor(FSlateApplication::Get().IsMouseAttached());
 		UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx(PlayerController);
 	}
 }
 
-APlayerController* USkullMenu_MenuWidget::GetPlayerController()
+APlayerController* USkullMenu_MenuWidget::GetPlayerController(ULocalPlayer* LocalPlayer)
 {
-	return UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	return IsValid(LocalPlayer)
+		? LocalPlayer->GetPlayerController(GetWorld())
+		: UGameplayStatics::GetPlayerController(GetWorld(), 0);
 }

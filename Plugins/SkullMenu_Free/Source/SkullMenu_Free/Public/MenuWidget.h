@@ -14,10 +14,8 @@ class SKULLMENU_FREE_API USkullMenu_MenuWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-public:
-	UFUNCTION(BlueprintCallable)
-	virtual void Show();
-
 protected:
-	APlayerController* GetPlayerController();
+	void AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder) override;
+
+	APlayerController* GetPlayerController(ULocalPlayer* LocalPlayer);
 };

@@ -23,12 +23,11 @@ class SKULLMENU_FREE_API USkullMenu_InGameMenuWidget : public USkullMenu_MenuWid
 public:
 	bool Initialize() override;
 
-	void Show() override;
-
-	UFUNCTION(BlueprintCallable)
-	void Hide();
+	void RemoveFromParent() override;
 
 protected:
+	void AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder) override;
+
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	USkullMenu_TextButtonWidget* ResumeBtn = nullptr;
 

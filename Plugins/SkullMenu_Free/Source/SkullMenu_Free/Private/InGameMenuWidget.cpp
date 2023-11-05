@@ -16,27 +16,14 @@ bool USkullMenu_InGameMenuWidget::Initialize()
 	if (!IsValid(ResumeBtn))
 		return false;
 
-	ResumeBtn->OnClicked.AddUniqueDynamic(this, &USkullMenu_InGameMenuWidget::Hide);
+	ResumeBtn->OnClicked.AddUniqueDynamic(this, &USkullMenu_InGameMenuWidget::RemoveFromViewport);
 
 	return true;
 }
 
-void USkullMenu_InGameMenuWidget::Show()
+void USkullMenu_InGameMenuWidget::RemoveFromParent()
 {
-	if (auto* PlayerController = GetPlayerController())
-	{
-		bWasCursorShownBefore = PlayerController->bShowMouseCursor;
-		
-		if (bShouldPauseGame)
-			PlayerController->SetPause(true);
-	}
-
-	Super::Show();
-}
-
-void USkullMenu_InGameMenuWidget::Hide()
-{
-	if (auto* PlayerController = GetPlayerController())
+	if (auto* PlayerController = GetPlayerController(GetOwningLocalPlayer()))
 	{
 		if (InGameInputMode == ESkullMenu_InGameInputMode::GameOnly)
 			UWidgetBlueprintLibrary::SetInputMode_GameOnly(PlayerController);
@@ -49,5 +36,18 @@ void USkullMenu_InGameMenuWidget::Hide()
 			PlayerController->SetPause(false);
 	}
 
-	RemoveFromViewport();
+	Super::RemoveFromParent();
+}
+
+void USkullMenu_InGameMenuWidget::AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder)
+{
+	if (auto* PlayerController = GetPlayerController(LocalPlayer))
+	{
+		bWasCursorShownBefore = PlayerController->bShowMouseCursor;
+
+		if (bShouldPauseGame)
+			PlayerController->SetPause(true);
+	}
+
+	Super::AddToScreen(LocalPlayer, ZOrder);
 }
