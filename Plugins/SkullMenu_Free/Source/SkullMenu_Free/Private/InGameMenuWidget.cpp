@@ -25,13 +25,6 @@ void USkullMenu_InGameMenuWidget::RemoveFromParent()
 {
 	if (auto* PlayerController = GetPlayerController(GetOwningLocalPlayer()))
 	{
-		if (InGameInputMode == ESkullMenu_InGameInputMode::GameOnly)
-			UWidgetBlueprintLibrary::SetInputMode_GameOnly(PlayerController);
-		else
-			UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(PlayerController);
-
-		PlayerController->SetShowMouseCursor(bWasCursorShownBefore);
-
 		if (bShouldPauseGame)
 			PlayerController->SetPause(false);
 	}
@@ -41,13 +34,11 @@ void USkullMenu_InGameMenuWidget::RemoveFromParent()
 
 void USkullMenu_InGameMenuWidget::AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder)
 {
+	Super::AddToScreen(LocalPlayer, ZOrder);
+
 	if (auto* PlayerController = GetPlayerController(LocalPlayer))
 	{
-		bWasCursorShownBefore = PlayerController->bShowMouseCursor;
-
 		if (bShouldPauseGame)
 			PlayerController->SetPause(true);
 	}
-
-	Super::AddToScreen(LocalPlayer, ZOrder);
 }

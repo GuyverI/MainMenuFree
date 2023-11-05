@@ -9,13 +9,30 @@
 #include "Kismet/GameplayStatics.h"
 
 
+void USkullMenu_MenuWidget::RemoveFromParent()
+{
+	if (auto* PlayerController = GetPlayerController(GetOwningLocalPlayer()))
+	{
+		if (InGameInputMode == ESkullMenu_InGameInputMode::GameOnly)
+			UWidgetBlueprintLibrary::SetInputMode_GameOnly(PlayerController);
+		else
+			UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(PlayerController);
+
+		PlayerController->SetShowMouseCursor(bWasCursorShownBefore);
+	}
+
+	Super::RemoveFromParent();
+}
+
 void USkullMenu_MenuWidget::AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder)
 {
 	Super::AddToScreen(LocalPlayer, ZOrder);
 
 	if (auto* PlayerController = GetPlayerController(LocalPlayer))
 	{
+		bWasCursorShownBefore = PlayerController->bShowMouseCursor;
 		PlayerController->SetShowMouseCursor(FSlateApplication::Get().IsMouseAttached());
+
 		UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx(PlayerController);
 	}
 }

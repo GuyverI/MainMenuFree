@@ -8,13 +8,6 @@
 
 class USkullMenu_TextButtonWidget;
 
-UENUM(BlueprintType)
-enum class ESkullMenu_InGameInputMode : uint8
-{
-	GameOnly,
-	GameAndUi
-};
-
 UCLASS()
 class SKULLMENU_FREE_API USkullMenu_InGameMenuWidget : public USkullMenu_MenuWidget
 {
@@ -33,10 +26,5 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere)
-	ESkullMenu_InGameInputMode InGameInputMode = ESkullMenu_InGameInputMode::GameOnly;
-	
-	UPROPERTY(EditAnywhere)
 	bool bShouldPauseGame = true;
-
-	bool bWasCursorShownBefore = false;
 };
