@@ -22,7 +22,7 @@ class SKULLMENU_FREE_API USkullMenu_MenuWidget : public UUserWidget
 public:
 	void RemoveFromParent() override;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Skull Menu")
 	ESkullMenu_InGameInputMode InGameInputMode = ESkullMenu_InGameInputMode::GameOnly;
 
 protected:

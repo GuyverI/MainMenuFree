@@ -15,7 +15,7 @@ class SKULLMENU_FREE_API USkullMenu_LevelSwitchButtonWidget : public USkullMenu_
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Skull Menu")
 	TSoftObjectPtr<UWorld> Level;
 
 private:

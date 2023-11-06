@@ -20,20 +20,20 @@ public:
 	bool Initialize() override;
 	void SynchronizeProperties() override;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category="Skull Menu")
 	void SetText(const FText& InText);
 
 	UPROPERTY(BlueprintAssignable)
 	FButtonCallback OnClicked;
 
 protected:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Skull Menu")
 	FText Text;
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, Category="Skull Menu", meta = (BindWidget))
 	class UButton* Button = nullptr;
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, Category="Skull Menu", meta = (BindWidget))
 	class UTextBlock* TextBlock = nullptr;
 
 private:

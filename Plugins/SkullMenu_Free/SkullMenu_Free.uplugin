@@ -2,9 +2,9 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "SkullMenu_Free",
+	"FriendlyName": "Skull Menu (Free)",
 	"Description": "Simple Menu System",
-	"Category": "Other",
+	"Category": "Skull Menu",
 	"CreatedBy": "Skull",
 	"CreatedByURL": "",
 	"DocsURL": "",
@@ -18,7 +18,10 @@
 		{
 			"Name": "SkullMenu_Free",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64"
+			]
 		}
 	]
 }

@@ -21,10 +21,10 @@ public:
 protected:
 	void AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder) override;
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, Category="Skull Menu", meta = (BindWidget))
 	USkullMenu_TextButtonWidget* ResumeBtn = nullptr;
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Skull Menu")
 	bool bShouldPauseGame = true;
 };

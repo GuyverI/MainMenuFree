@@ -21,10 +21,10 @@ public:
 	void SynchronizeProperties() override;
 
 protected:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Skull Menu")
 	FText Text;
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, Category = "Skull Menu", meta = (BindWidget))
 	USkullMenu_TextButtonWidget* Button = nullptr;
 
 private:

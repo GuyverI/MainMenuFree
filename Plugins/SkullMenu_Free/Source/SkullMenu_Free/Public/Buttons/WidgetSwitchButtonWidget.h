@@ -15,10 +15,10 @@ class SKULLMENU_FREE_API USkullMenu_WidgetSwitchButtonWidget : public USkullMenu
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Skull Menu")
 	UWidget* WidgetToHide = nullptr;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Skull Menu")
 	UWidget* WidgetToShow = nullptr;
 	
 private:
