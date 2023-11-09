@@ -26,10 +26,14 @@ public:
 	ESkullMenu_InGameInputMode InGameInputMode = ESkullMenu_InGameInputMode::GameOnly;
 
 protected:
-	void AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder) override;
+	void NativeConstruct() override;
+	void NativeDestruct() override;
+
+	virtual void OnAddedToViewport(UWidget* Widget, ULocalPlayer* LocalPlayer);
 
 	APlayerController* GetPlayerController(ULocalPlayer* LocalPlayer);
 
 private:
+	FDelegateHandle OnAddedToViewportDelegateHandle;
 	bool bWasCursorShownBefore = false;
 };

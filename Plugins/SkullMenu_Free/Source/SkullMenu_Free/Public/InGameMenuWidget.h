@@ -14,15 +14,16 @@ class SKULLMENU_FREE_API USkullMenu_InGameMenuWidget : public USkullMenu_MenuWid
 	GENERATED_BODY()
 	
 public:
-	bool Initialize() override;
-
 	void RemoveFromParent() override;
 
 protected:
-	void AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder) override;
+	void NativeOnInitialized() override;
+
+	void OnAddedToViewport(UWidget* Widget, ULocalPlayer* LocalPlayer) override;
 
 	UPROPERTY(BlueprintReadWrite, Category="Skull Menu", meta = (BindWidget))
 	USkullMenu_TextButtonWidget* ResumeBtn = nullptr;
+
 
 private:
 	UPROPERTY(EditAnywhere, Category="Skull Menu")

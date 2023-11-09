@@ -3,6 +3,7 @@
 
 #include "MenuWidget.h"
 
+#include "Blueprint/GameViewportSubsystem.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Framework/Application/SlateApplication.h"
 #include "GameFramework/PlayerController.h"
@@ -24,9 +25,33 @@ void USkullMenu_MenuWidget::RemoveFromParent()
 	Super::RemoveFromParent();
 }
 
-void USkullMenu_MenuWidget::AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder)
+void USkullMenu_MenuWidget::NativeConstruct()
 {
-	Super::AddToScreen(LocalPlayer, ZOrder);
+	Super::NativeConstruct();
+
+	if (UGameViewportSubsystem* Subsystem = UGameViewportSubsystem::Get(GetWorld()))
+	{
+		if (!Subsystem->OnWidgetAdded.IsBoundToObject(this))
+			OnAddedToViewportDelegateHandle = Subsystem->OnWidgetAdded.AddLambda([this](UWidget* Widget, ULocalPlayer* LocalPlayer)
+				{ OnAddedToViewport(Widget, LocalPlayer); });
+	}
+}
+
+void USkullMenu_MenuWidget::NativeDestruct()
+{
+	if (UGameViewportSubsystem* Subsystem = UGameViewportSubsystem::Get(GetWorld()))
+	{
+		Subsystem->OnWidgetAdded.Remove(OnAddedToViewportDelegateHandle);
+		OnAddedToViewportDelegateHandle.Reset();
+	}
+
+	Super::NativeDestruct();
+}
+
+void USkullMenu_MenuWidget::OnAddedToViewport(UWidget* Widget, ULocalPlayer* LocalPlayer)
+{
+	if (Widget != this)
+		return;
 
 	if (auto* PlayerController = GetPlayerController(LocalPlayer))
 	{

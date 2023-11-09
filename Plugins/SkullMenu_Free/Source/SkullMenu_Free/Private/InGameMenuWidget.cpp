@@ -3,23 +3,12 @@
 
 #include "InGameMenuWidget.h"
 
+#include "Blueprint/GameViewportSubsystem.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "GameFramework/PlayerController.h"
 
 #include "Buttons/TextButtonWidget.h"
 
-bool USkullMenu_InGameMenuWidget::Initialize()
-{
-	if (!Super::Initialize())
-		return false;
-
-	if (!IsValid(ResumeBtn))
-		return false;
-
-	ResumeBtn->OnClicked.AddUniqueDynamic(this, &USkullMenu_InGameMenuWidget::RemoveFromViewport);
-
-	return true;
-}
 
 void USkullMenu_InGameMenuWidget::RemoveFromParent()
 {
@@ -32,9 +21,22 @@ void USkullMenu_InGameMenuWidget::RemoveFromParent()
 	Super::RemoveFromParent();
 }
 
-void USkullMenu_InGameMenuWidget::AddToScreen(ULocalPlayer* LocalPlayer, int32 ZOrder)
+void USkullMenu_InGameMenuWidget::NativeOnInitialized()
 {
-	Super::AddToScreen(LocalPlayer, ZOrder);
+	Super::NativeOnInitialized();
+
+	if (!IsValid(ResumeBtn))
+		return;
+
+	ResumeBtn->OnClicked.AddUniqueDynamic(this, &USkullMenu_InGameMenuWidget::RemoveFromParent);
+}
+
+void USkullMenu_InGameMenuWidget::OnAddedToViewport(UWidget* Widget, ULocalPlayer* LocalPlayer)
+{
+	Super::OnAddedToViewport(Widget, LocalPlayer);
+
+	if (Widget != this)
+		return;
 
 	if (auto* PlayerController = GetPlayerController(LocalPlayer))
 	{
