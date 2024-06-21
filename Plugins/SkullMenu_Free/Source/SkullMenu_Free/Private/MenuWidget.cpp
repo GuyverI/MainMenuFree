@@ -17,7 +17,7 @@ void USkullMenu_MenuWidget::RemoveFromParent()
 		if (InGameInputMode == ESkullMenu_InGameInputMode::GameOnly)
 			UWidgetBlueprintLibrary::SetInputMode_GameOnly(PlayerController);
 		else
-			UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(PlayerController);
+			UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(PlayerController, nullptr, MouseLockModeBeforeShowing, bWasCursorHiddenDuringCaptureBeforeShowing);
 
 		PlayerController->SetShowMouseCursor(bWasCursorShownBefore);
 	}
@@ -55,10 +55,19 @@ void USkullMenu_MenuWidget::OnAddedToViewport(UWidget* Widget, ULocalPlayer* Loc
 
 	if (auto* PlayerController = GetPlayerController(LocalPlayer))
 	{
+		if (const auto* World = GetWorld())
+		{
+			if (const auto* GameView = World->GetGameViewport())
+			{
+				MouseLockModeBeforeShowing = GameView->GetMouseLockMode();
+				bWasCursorHiddenDuringCaptureBeforeShowing = GameView->HideCursorDuringCapture();
+			}
+		}
+
 		bWasCursorShownBefore = PlayerController->bShowMouseCursor;
 		PlayerController->SetShowMouseCursor(FSlateApplication::Get().IsMouseAttached());
 
-		UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx(PlayerController);
+		UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx(PlayerController, nullptr, MouseLockModeBeforeShowing);
 	}
 }
 

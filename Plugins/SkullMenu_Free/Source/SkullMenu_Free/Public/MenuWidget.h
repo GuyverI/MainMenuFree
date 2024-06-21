@@ -35,5 +35,7 @@ protected:
 
 private:
 	FDelegateHandle OnAddedToViewportDelegateHandle;
+	EMouseLockMode MouseLockModeBeforeShowing = EMouseLockMode::DoNotLock;
+	bool bWasCursorHiddenDuringCaptureBeforeShowing = false;
 	bool bWasCursorShownBefore = false;
 };
