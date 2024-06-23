@@ -2,6 +2,7 @@
 
 
 #include "Buttons/WidgetSwitchButtonWidget.h"
+#include "Blueprint/GameViewportSubsystem.h"
 
 namespace USkullMenu_WidgetSwitchButtonWidgetUtils
 {
@@ -14,6 +15,23 @@ namespace USkullMenu_WidgetSwitchButtonWidgetUtils
 
 void USkullMenu_WidgetSwitchButtonWidget::OnButtonClicked()
 {
-	USkullMenu_WidgetSwitchButtonWidgetUtils::SetWidgetVisibility(WidgetToHide, ESlateVisibility::Hidden);
-	USkullMenu_WidgetSwitchButtonWidgetUtils::SetWidgetVisibility(WidgetToShow, ESlateVisibility::Visible);
+	if (SwitchMethod == ESkullMenu_SwitchMethod::ClientViewContent)
+	{
+		if (IsValid(WidgetToHide))
+			WidgetToHide->RemoveFromParent();
+
+		if (IsValid(WidgetToShow))
+		{
+			if (UGameViewportSubsystem* Subsystem = UGameViewportSubsystem::Get(GetWorld()))
+			{
+				const auto WidgetSlot = Subsystem->GetWidgetSlot(WidgetToShow);
+				Subsystem->AddWidget(WidgetToShow, WidgetSlot);
+			}
+		}
+	}
+	else
+	{
+		USkullMenu_WidgetSwitchButtonWidgetUtils::SetWidgetVisibility(WidgetToHide, ESlateVisibility::Hidden);
+		USkullMenu_WidgetSwitchButtonWidgetUtils::SetWidgetVisibility(WidgetToShow, ESlateVisibility::Visible);
+	}
 }
