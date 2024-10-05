@@ -17,7 +17,7 @@ public:
 	void RemoveFromParent() override;
 
 protected:
-	void NativeOnInitialized() override;
+	void NativeConstruct() override;
 
 	void OnAddedToViewport(UWidget* Widget, ULocalPlayer* LocalPlayer) override;
 

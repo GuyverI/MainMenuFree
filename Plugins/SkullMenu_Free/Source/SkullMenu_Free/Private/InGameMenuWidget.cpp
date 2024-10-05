@@ -21,9 +21,9 @@ void USkullMenu_InGameMenuWidget::RemoveFromParent()
 	Super::RemoveFromParent();
 }
 
-void USkullMenu_InGameMenuWidget::NativeOnInitialized()
+void USkullMenu_InGameMenuWidget::NativeConstruct()
 {
-	Super::NativeOnInitialized();
+	Super::NativeConstruct();
 
 	if (!IsValid(ResumeBtn))
 		return;
